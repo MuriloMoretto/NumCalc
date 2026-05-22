@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "expo": "^56.0.3",
+    "mathjs": "^15.2.0"
+  }
+}
