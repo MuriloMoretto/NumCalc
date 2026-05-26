@@ -63,7 +63,7 @@ export default function SistemasScreen() {
     for (let i = 0; i < size; i++) L[i][i] = 1;
     for (let col = 0; col < size; col++) {
       for (let row = col + 1; row < size; row++) {
-        if (Math.abs(U[col][col]) < 1e-12) return Alert.alert('Erro', 'Pivô zero. Use Gauss com pivoteamento.');
+        if (Math.abs(U[col][col]) < 1e-12) return Alert.alert('Erro', 'Pivô zero. Use Gauss.');
         L[row][col] = U[row][col] / U[col][col];
         for (let k = col; k < size; k++) U[row][k] -= L[row][col] * U[col][k];
       }
