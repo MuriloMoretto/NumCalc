@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Alert } from 'react-native';
-import { useRouter } from 'expo-router';
 import * as math from 'mathjs';
 
 export default function RaizesScreen() {
-  const router = useRouter();
   const [metodo, setMetodo] = useState('bissecao');
-  const [funcao, setFuncao] = useState('');
-  const [a, setA] = useState('');
-  const [b, setB] = useState('');
-  const [x0, setX0] = useState('');
-  const [x1, setX1] = useState('');
+  const [funcao, setFuncao] = useState('x^3 - x - 2');
+  const [a, setA] = useState('1');
+  const [b, setB] = useState('2');
+  const [x0, setX0] = useState('1.5');
+  const [x1, setX1] = useState('2');
   const [tol, setTol] = useState('0.0001');
   const [resultado, setResultado] = useState('');
 
@@ -92,9 +90,6 @@ export default function RaizesScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <TouchableOpacity onPress={() => router.back()} style={styles.voltar}>
-        <Text style={styles.voltarTexto}>← Voltar</Text>
-      </TouchableOpacity>
       <Text style={styles.titulo}>Raízes de Funções</Text>
 
       <Text style={styles.label}>Método</Text>
@@ -108,7 +103,7 @@ export default function RaizesScreen() {
       </View>
 
       <Text style={styles.label}>Função f(x)</Text>
-      <TextInput style={styles.input} value={funcao} onChangeText={setFuncao} placeholder="Ex: x^3 - x - 2" placeholderTextColor="#aaa" />
+      <TextInput style={styles.input} value={funcao} onChangeText={setFuncao}/>
 
       {(metodo === 'bissecao') && (<>
         <Text style={styles.label}>Intervalo [a, b]</Text>
@@ -148,9 +143,7 @@ export default function RaizesScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, backgroundColor: '#f5f5f5', padding: 24, paddingTop: 60 },
-  voltar: { marginBottom: 12 },
-  voltarTexto: { color: '#378ADD', fontSize: 15 },
+  container: { flexGrow: 1, backgroundColor: '#f5f5f5', padding: 24, paddingTop: 30 },
   titulo: { fontSize: 24, fontWeight: 'bold', color: '#1a1a1a', marginBottom: 20 },
   label: { fontSize: 13, fontWeight: '600', color: '#555', marginBottom: 6, marginTop: 12 },
   input: { backgroundColor: '#fff', borderRadius: 8, padding: 12, fontSize: 15, color: '#1a1a1a', borderWidth: 1, borderColor: '#ddd' },

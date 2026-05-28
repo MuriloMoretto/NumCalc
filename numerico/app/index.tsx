@@ -6,8 +6,9 @@ export default function HomeScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.titulo}>Bem-Vindo ao NumCalc!</Text>
       <Text style={styles.titulo}>Métodos Numéricos</Text>
-      <Text style={styles.subtitulo}>Selecione um módulo</Text>
+      <Text style={styles.subtitulo}>Selecione um módulo:</Text>
 
       <TouchableOpacity style={[styles.card, { borderLeftColor: '#378ADD' }]} onPress={() => router.push('/raizes')}>
         <Text style={styles.cardTitulo}>Raízes de Funções</Text>
@@ -22,6 +23,11 @@ export default function HomeScreen() {
       <TouchableOpacity style={[styles.card, { borderLeftColor: '#BA7517' }]} onPress={() => router.push('/curvas')}>
         <Text style={styles.cardTitulo}>Ajuste de Curvas</Text>
         <Text style={styles.cardDesc}>Regressão Linear · Mínimos Quadrados</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={[styles.card, { borderLeftColor: '#888' }]} onPress={() => router.push('/sobre')}>
+        <Text style={styles.cardTitulo}>Sobre</Text>
+        <Text style={styles.cardDesc}>Informações sobre o aplicativo e a equipe</Text>
       </TouchableOpacity>
     </ScrollView>
   );

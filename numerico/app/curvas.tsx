@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Alert } from 'react-native';
-import { useRouter } from 'expo-router';
 
 export default function CurvasScreen() {
-  const router = useRouter();
   const [metodo, setMetodo] = useState('linear');
-  const [pontosX, setPontosX] = useState('');
-  const [pontosY, setPontosY] = useState('');
+  const [pontosX, setPontosX] = useState('1, 2, 3, 4, 5');
+  const [pontosY, setPontosY] = useState('2.1, 3.9, 6.2, 7.8, 10.1');
   const [grau, setGrau] = useState('2');
   const [resultado, setResultado] = useState('');
 
@@ -95,28 +93,23 @@ export default function CurvasScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <TouchableOpacity onPress={() => router.back()} style={styles.voltar}>
-        <Text style={styles.voltarTexto}>← Voltar</Text>
-      </TouchableOpacity>
       <Text style={styles.titulo}>Ajuste de Curvas</Text>
 
       <Text style={styles.label}>Método</Text>
       <View style={styles.metodos}>
         {[{ id: 'linear', label: 'Regressão Linear' }, { id: 'minimos', label: 'Mínimos Quadrados' }].map(m => (
           <TouchableOpacity key={m.id} style={[styles.metodoBtn, metodo === m.id && styles.metodoBtnAtivo]}
-            onPress={() => { setMetodo(m.id); setResultado(''); }}>
+            onPress={() => { setMetodo(m.id); setResultado(''); m.id === 'linear' ? (setPontosX('1, 2, 3, 4, 5'), setPontosY('2.1, 3.9, 6.2, 7.8, 10.1')) : (setPontosX('1, 2, 3, 4, 5'), setPontosY('1, 4, 9, 16, 25')); }}>
             <Text style={[styles.metodoBtnTexto, metodo === m.id && styles.metodoBtnTextoAtivo]}>{m.label}</Text>
           </TouchableOpacity>
         ))}
       </View>
 
       <Text style={styles.label}>Valores de X (separados por vírgula)</Text>
-      <TextInput style={styles.input} value={pontosX} onChangeText={setPontosX}
-        placeholder="Ex: 1, 2, 3, 4, 5" placeholderTextColor="#aaa" keyboardType="default" />
+      <TextInput style={styles.input} value={pontosX} onChangeText={setPontosX} keyboardType="default" />
 
       <Text style={styles.label}>Valores de Y (separados por vírgula)</Text>
-      <TextInput style={styles.input} value={pontosY} onChangeText={setPontosY}
-        placeholder="Ex: 2.1, 3.9, 6.2, 7.8, 10.1" placeholderTextColor="#aaa" keyboardType="default" />
+      <TextInput style={styles.input} value={pontosY} onChangeText={setPontosY} keyboardType="default" />
 
       {metodo === 'minimos' && (<>
         <Text style={styles.label}>Grau do polinômio</Text>
@@ -144,9 +137,7 @@ export default function CurvasScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, backgroundColor: '#f5f5f5', padding: 24, paddingTop: 60 },
-  voltar: { marginBottom: 12 },
-  voltarTexto: { color: '#BA7517', fontSize: 15 },
+  container: { flexGrow: 1, backgroundColor: '#f5f5f5', padding: 24, paddingTop: 30 },
   titulo: { fontSize: 24, fontWeight: 'bold', color: '#1a1a1a', marginBottom: 20 },
   label: { fontSize: 13, fontWeight: '600', color: '#555', marginBottom: 6, marginTop: 12 },
   input: { backgroundColor: '#fff', borderRadius: 8, padding: 12, fontSize: 15, color: '#1a1a1a', borderWidth: 1, borderColor: '#ddd' },

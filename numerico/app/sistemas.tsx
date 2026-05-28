@@ -1,26 +1,53 @@
 import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Alert } from 'react-native';
-import { useRouter } from 'expo-router';
 
 export default function SistemasScreen() {
-  const router = useRouter();
   const [metodo, setMetodo] = useState('gauss');
   const [tamanho, setTamanho] = useState('3');
-  const [matriz, setMatriz] = useState<string[][]>(Array(3).fill(null).map(() => Array(4).fill('')));
+  const exemplo3x3 = [
+  ['10', '-1', '2', '6'],
+  ['-1', '11', '-1', '25'],
+  ['2', '-1', '10', '-11']
+];
+  const [matriz, setMatriz] = useState<string[][]>(exemplo3x3);
   const [tol, setTol] = useState('0.0001');
   const [resultado, setResultado] = useState('');
 
   const n = parseInt(tamanho) || 3;
 
   const ajustarMatriz = (novoN: string) => {
-    const size = parseInt(novoN) || 3;
-    const novaMatriz = Array(size).fill(null).map((_, i) =>
-      Array(size + 1).fill('').map((_, j) => (matriz[i] && matriz[i][j]) ? matriz[i][j] : '')
-    );
-    setMatriz(novaMatriz);
-    setTamanho(novoN);
-    setResultado('');
-  };
+  const size = parseInt(novoN);
+
+  let novaMatriz: string[][] = [];
+
+  if (size === 2) {
+    novaMatriz = [
+      ['2', '1', '5'],
+      ['1', '3', '6']
+    ];
+  }
+
+  else if (size === 3) {
+    novaMatriz = [
+      ['10', '-1', '2', '6'],
+      ['-1', '11', '-1', '25'],
+      ['2', '-1', '10', '-11']
+    ];
+  }
+
+  else if (size === 4) {
+    novaMatriz = [
+      ['10', '-1', '2', '0', '6'],
+      ['-1', '11', '-1', '3', '25'],
+      ['2', '-1', '10', '-1', '-11'],
+      ['0', '3', '-1', '8', '15']
+    ];
+  }
+
+  setMatriz(novaMatriz);
+  setTamanho(novoN);
+  setResultado('');
+};
 
   const setCell = (i: number, j: number, val: string) => {
     const nova = matriz.map(row => [...row]);
@@ -150,9 +177,6 @@ export default function SistemasScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <TouchableOpacity onPress={() => router.back()} style={styles.voltar}>
-        <Text style={styles.voltarTexto}>← Voltar</Text>
-      </TouchableOpacity>
       <Text style={styles.titulo}>Sistemas Lineares</Text>
 
       <Text style={styles.label}>Método</Text>
@@ -184,7 +208,6 @@ export default function SistemasScreen() {
               value={matriz[i]?.[j] ?? ''}
               onChangeText={val => setCell(i, j, val)}
               keyboardType="default"
-              placeholder={j === n ? 'b' : `a${i + 1}${j + 1}`}
               placeholderTextColor="#aaa"
             />
           ))}
@@ -210,9 +233,7 @@ export default function SistemasScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, backgroundColor: '#f5f5f5', padding: 24, paddingTop: 60 },
-  voltar: { marginBottom: 12 },
-  voltarTexto: { color: '#1D9E75', fontSize: 15 },
+  container: { flexGrow: 1, backgroundColor: '#f5f5f5', padding: 24, paddingTop: 30 },
   titulo: { fontSize: 24, fontWeight: 'bold', color: '#1a1a1a', marginBottom: 20 },
   label: { fontSize: 13, fontWeight: '600', color: '#555', marginBottom: 6, marginTop: 12 },
   input: { backgroundColor: '#fff', borderRadius: 8, padding: 10, fontSize: 14, color: '#1a1a1a', borderWidth: 1, borderColor: '#ddd', marginBottom: 6 },
